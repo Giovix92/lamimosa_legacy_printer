@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Same brand palette as lamimosa_android/.../res/values/colors.xml -->
+    <color name="MimosaPink">#D81B60</color>
+    <color name="MimosaPinkDark">#A80F48</color>
+    <color name="MimosaCream">#FFFBF5</color>
+    <color name="TextDark">#332426</color>
+    <color name="TextMuted">#8A6D72</color>
+    <color name="Divider">#F0DEE2</color>
+    <color name="White">#FFFFFF</color>
+</resources>

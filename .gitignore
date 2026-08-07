@@ -1,0 +1,17 @@
+*.iml
+.gradle/
+.idea/
+local.properties
+.DS_Store
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Build/distribution artifacts and generated certs - regenerable from
+# source (see README), not meant to live in version control.
+*.apk
+*.aab
+*.crt
+*.cer
+*.der

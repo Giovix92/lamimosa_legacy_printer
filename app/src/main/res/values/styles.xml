@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- API 16 = pre-Material (Holo only) - no colorPrimary/colorAccent, so
+         theming happens by hand: window background, ActionBar background,
+         a global button style, and per-button style overrides below. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light">
+        <item name="android:windowBackground">@color/MimosaCream</item>
+        <item name="android:actionBarStyle">@style/AppActionBar</item>
+        <item name="android:buttonStyle">@style/AppButton</item>
+        <item name="android:textColorPrimary">@color/TextDark</item>
+        <item name="android:textColorSecondary">@color/TextMuted</item>
+        <item name="android:spinnerItemStyle">@style/AppSpinnerItem</item>
+    </style>
+
+    <style name="AppActionBar" parent="android:Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/MimosaPink</item>
+        <item name="android:titleTextStyle">@style/AppActionBarTitle</item>
+    </style>
+
+    <style name="AppActionBarTitle" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/White</item>
+    </style>
+
+    <style name="AppSpinnerItem" parent="android:Widget.Holo.Light.TextView.SpinnerItem">
+        <item name="android:textColor">@color/TextDark</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
+    <!-- Primary (solid pink) - the default for every plain <Button> via the theme above. -->
+    <style name="AppButton" parent="android:Widget.Holo.Light.Button">
+        <item name="android:background">@drawable/bg_button</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+
+    <!-- Secondary (outlined) - for actions that shouldn't visually compete with
+         the screen's primary action (e.g. Modifica/Archivia next to Stampa). -->
+    <style name="AppButton.Outline">
+        <item name="android:background">@drawable/bg_button_outline</item>
+        <item name="android:textColor">@color/MimosaPink</item>
+    </style>
+
+    <!-- Danger (Elimina) - same outline shape, red instead of brand pink so
+         a destructive action doesn't get mistaken for a routine one. -->
+    <style name="AppButton.Danger">
+        <item name="android:background">@drawable/bg_button_danger</item>
+        <item name="android:textColor">#B3261E</item>
+    </style>
+
+</resources>

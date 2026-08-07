@@ -1,0 +1,68 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace = "com.giovix92.lamimosalegacyprinter"
+    // compileSdk can stay modern (only affects which compile-time stubs are
+    // available); it does NOT raise the floor of what the app can install on.
+    compileSdk = 34
+
+    defaultConfig {
+        applicationId = "com.giovix92.lamimosalegacyprinter"
+        // Jelly Bean 4.1.1 == API 16. This is the whole point of this module.
+        minSdk = 16
+        targetSdk = 16
+        versionCode = 1
+        versionName = "1.0"
+
+        // JB-era (2012ish) POS hardware is 32-bit ARM; Conscrypt's native lib
+        // otherwise ships for arm64/x86/x86_64 too, quadrupling APK size for
+        // ABIs this device can never use.
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // Signed with the auto-generated debug keystore (~/.android/debug.keystore),
+            // not a real release key: this app is sideloaded on one premises-bound
+            // device, never distributed, so a proper release-signing setup would be
+            // ceremony without benefit. Keeps `assembleRelease` producing an
+            // installable APK without extra keystore management.
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    // No AndroidX, no support library, no third-party networking/JSON libs:
+    // everything used here (HttpURLConnection, org.json, plain Views) has
+    // shipped in the Android framework since API 1, so there is nothing here
+    // to raise the minSdk floor above 16.
+    //
+    // Exception: Conscrypt (below). API 16's stock OpenSSL cannot complete a
+    // TLS 1.2 handshake with Netlify's edge (confirmed on real hardware:
+    // SSL23_GET_SERVER_HELLO / unsupported protocol) no matter which
+    // protocols are requested - the system provider's cipher/extension
+    // support is just too old. Conscrypt bundles its own BoringSSL, fully
+    // independent of the device's system TLS stack.
+    lint {
+        abortOnError = false
+    }
+}
+
+dependencies {
+    implementation 'org.conscrypt:conscrypt-android:2.5.2'
+}

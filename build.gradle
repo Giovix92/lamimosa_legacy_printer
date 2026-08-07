@@ -1,0 +1,7 @@
+// Root build file. Deliberately old-generation AGP + Kotlin so the toolchain
+// keeps accepting minSdk 16 (Jelly Bean 4.1.1) without fighting newer plugin
+// versions that assume a much higher API floor everywhere.
+plugins {
+    id 'com.android.application' version '8.1.4' apply false
+    id 'org.jetbrains.kotlin.android' version '1.9.22' apply false
+}

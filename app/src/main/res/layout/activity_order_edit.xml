@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cliente" android:textStyle="bold" />
+        <EditText android:id="@+id/edName" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Nome" />
+        <EditText android:id="@+id/edPhone" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Telefono" android:inputType="phone" />
+        <EditText android:id="@+id/edEmail" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Email" android:inputType="textEmailAddress" />
+        <EditText android:id="@+id/edOperatore" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Operatore" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sede/Modalità" android:textStyle="bold" android:layout_marginTop="12dp" />
+        <Spinner android:id="@+id/spSede" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Categoria" android:textStyle="bold" android:layout_marginTop="12dp" />
+        <Spinner android:id="@+id/spCategoria" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+        <!-- ── Campi Torta ─────────────────────────────────────── -->
+        <LinearLayout android:id="@+id/groupTorta" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Occasione" android:textStyle="bold" android:layout_marginTop="12dp" />
+            <Spinner android:id="@+id/spOccasione" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <LinearLayout android:id="@+id/groupOccasioneAltro" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                <EditText android:id="@+id/edOccasioneAltro" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Quale occasione?" />
+            </LinearLayout>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sesso festeggiato" android:textStyle="bold" android:layout_marginTop="12dp" />
+            <Spinner android:id="@+id/spSesso" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Età festeggiato" android:textStyle="bold" android:layout_marginTop="12dp" />
+            <Spinner android:id="@+id/spEta" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Candeline?" android:textStyle="bold" android:layout_marginTop="12dp" />
+            <Spinner android:id="@+id/spCandeline" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <LinearLayout android:id="@+id/groupNumeroCandeline" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                <EditText android:id="@+id/edNumeroCandeline" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Numero candeline" android:inputType="number" />
+            </LinearLayout>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tipo Torta" android:textStyle="bold" android:layout_marginTop="12dp" />
+            <Spinner android:id="@+id/spTipologia" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <LinearLayout android:id="@+id/groupTipologiaAltro" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                <EditText android:id="@+id/edTipologiaAltro" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Quale tipo di torta?" />
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/groupGusti" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Gusti (max 2)" android:textStyle="bold" android:layout_marginTop="12dp" />
+                <TextView android:id="@+id/txtGustiSelected" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Nessun gusto selezionato" />
+                <Button android:id="@+id/btnGusti" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Scegli gusti…" />
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/groupGustoAltro" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                <EditText android:id="@+id/edGustoAltro" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Descrivi il gusto" />
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/groupTopping" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Aggiunta (topping)" android:textStyle="bold" android:layout_marginTop="12dp" />
+                <Spinner android:id="@+id/spTopping" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Panna" android:textStyle="bold" android:layout_marginTop="12dp" />
+            <Spinner android:id="@+id/spPanna" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Scritta?" android:textStyle="bold" android:layout_marginTop="12dp" />
+            <Spinner android:id="@+id/spScritta" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <LinearLayout android:id="@+id/groupTestoScritta" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                <EditText android:id="@+id/edTestoScritta" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Testo scritta" />
+            </LinearLayout>
+
+            <CheckBox android:id="@+id/cbStampa" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Cialda commestibile (stampa foto)" android:layout_marginTop="8dp" />
+            <CheckBox android:id="@+id/cbFotoEsempio" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Cliente ha già la foto esempio" />
+        </LinearLayout>
+
+        <!-- ── Campi Vassoio ───────────────────────────────────── -->
+        <LinearLayout android:id="@+id/groupVassoio" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Peso (kg)" android:textStyle="bold" android:layout_marginTop="12dp" />
+            <EditText android:id="@+id/edPeso" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="numberDecimal" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tipo di Paste" android:textStyle="bold" android:layout_marginTop="12dp" />
+            <Spinner android:id="@+id/spTipoPaste" android:layout_width="match_parent" android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Data evento (AAAA-MM-GG)" android:textStyle="bold" android:layout_marginTop="12dp" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <EditText android:id="@+id/edEventDate" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:hint="AAAA-MM-GG" />
+            <Button android:id="@+id/btnPickDate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Scegli" />
+        </LinearLayout>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Orario (HH:MM)" android:textStyle="bold" android:layout_marginTop="12dp" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <EditText android:id="@+id/edOrario" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:hint="HH:MM" />
+            <Button android:id="@+id/btnPickTime" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Scegli" />
+        </LinearLayout>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Note" android:textStyle="bold" android:layout_marginTop="12dp" />
+        <EditText android:id="@+id/edMessage" android:layout_width="match_parent" android:layout_height="wrap_content" android:minLines="2" android:gravity="top" />
+
+        <Button android:id="@+id/btnSave" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:text="@string/save" />
+
+    </LinearLayout>
+</ScrollView>

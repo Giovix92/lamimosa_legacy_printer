@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">La Mimosa - Stampa</string>
+    <string name="settings_title">Impostazioni Stampante</string>
+    <string name="refresh">Aggiorna</string>
+    <string name="no_orders">Nessun ordine da mostrare.</string>
+    <string name="loading">Caricamento ordini…</string>
+    <string name="save">Salva</string>
+    <string name="printer_ip">IP Stampante</string>
+    <string name="printer_port">Porta</string>
+    <string name="printer_endpoint">Endpoint</string>
+    <string name="printer_operator">Operatore</string>
+    <string name="printer_max_line_chars">Caratteri per riga</string>
+    <string name="print_success">Stampa inviata con successo.</string>
+    <string name="print_failure">Stampa fallita: %1$s</string>
+    <string name="configure_printer_first">Configura prima la stampante nelle Impostazioni.</string>
+    <string name="title_edit_order">Modifica Ordine</string>
+    <string name="title_new_order">Nuovo Ordine</string>
+    <string name="new_order">+ Nuovo Ordine</string>
+    <string name="test_print">Test Stampa</string>
+    <string name="test_print_success">Test di stampa inviato con successo.</string>
+    <string name="test_print_failure">Test di stampa fallito: %1$s</string>
+</resources>

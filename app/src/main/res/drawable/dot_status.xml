@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Plain white oval - actual color set at runtime via GradientDrawable.setColor()
+     in MainActivity, since backgroundTint (the "correct" way to recolor this on
+     modern Android) needs API 21+. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <solid android:color="@color/TextMuted" />
+</shape>
