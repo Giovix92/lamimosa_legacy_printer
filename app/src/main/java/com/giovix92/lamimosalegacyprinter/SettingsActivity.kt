@@ -1,6 +1,7 @@
 package com.giovix92.lamimosalegacyprinter
 
 import android.app.Activity
+import android.content.Intent
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
@@ -11,6 +12,7 @@ import com.giovix92.lamimosalegacyprinter.net.PrintResult
 import com.giovix92.lamimosalegacyprinter.net.PrinterClient
 import com.giovix92.lamimosalegacyprinter.net.PrinterPrefs
 import com.giovix92.lamimosalegacyprinter.printer.EpsonFiscalXmlBuilder
+import com.giovix92.lamimosalegacyprinter.service.OrderCheckService
 import com.giovix92.lamimosalegacyprinter.util.showError
 
 class SettingsActivity : Activity() {
@@ -52,6 +54,14 @@ class SettingsActivity : Activity() {
         // Deliberately tests against whatever is currently typed, not what's
         // saved - lets staff verify an IP/port change before committing to it.
         findViewById<Button>(R.id.btnTestPrint).setOnClickListener { testPrint() }
+
+        // On-demand trigger for the background order-check (service/OrderCheckService.kt)
+        // instead of waiting up to 5 minutes for the next AlarmManager tick - mainly
+        // for verifying the notification actually fires without a long wait.
+        findViewById<Button>(R.id.btnCheckOrdersNow).setOnClickListener {
+            startService(Intent(this, OrderCheckService::class.java))
+            Toast.makeText(this, R.string.check_orders_now_started, Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun testPrint() {

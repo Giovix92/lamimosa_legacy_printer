@@ -241,6 +241,26 @@ cross-API-level primitive that actually works here: `AlarmManager`.
   guard (API 26+); on API 16 itself, `Notification.Builder.build()` (added
   in API 16 exactly - no older fallback needed for this app's own floor).
 
+**Confirmed on real hardware:** boot handling itself works (app opened
+instantly after reboot - the process was already warm, meaning
+`BOOT_COMPLETED` → `AlarmScheduler` fired correctly). No notification on
+a first test, though, for two reasons that stack:
+
+1. `AlarmScheduler`'s first fire is a full `POLL_INTERVAL_MS` (5 minutes)
+   *after* scheduling, not immediately.
+2. `OrderCheckService`'s first-ever check silently seeds its baseline
+   instead of notifying (by design - otherwise every pre-existing order
+   would fire a notification the moment this feature ships).
+
+A test order created right after boot/reinstall can sail straight into
+that silent seed pass with nothing to show for it. Fixed by having
+`App.onCreate()` also kick an immediate `OrderCheckService` run (not just
+schedule the periodic alarm) - seeding now happens within seconds of
+process start instead of up to 5 minutes later. Also added a manual
+"Controlla nuovi ordini ora" button in Settings
+(`SettingsActivity.btnCheckOrdersNow`) that starts the same service
+on-demand, for testing without waiting on the timer at all.
+
 Also needs `RECEIVE_BOOT_COMPLETED` and `WAKE_LOCK` permissions (added to
 the manifest) beyond what the app already had.
 
@@ -258,12 +278,15 @@ the manifest) beyond what the app already had.
   (checks past the 2-item cap are silently trimmed to the first 2 on save,
   with a toast) rather than the web's live-disable-past-2 UX — functionally
   equivalent, less polished.
-- The background order-check service is untested on real hardware as of
-  writing (unlike everything above it, which has been). Things worth
-  specifically checking on-device: whether this particular JB build/OEM
-  skin kills backgrounded processes aggressively (some do, pre-dating
-  today's more standardized battery-optimization exemptions), and whether
-  `RECEIVE_BOOT_COMPLETED` fires reliably on this hardware post-reboot.
+- The background order-check service's boot-handling is confirmed working
+  on real hardware (see above); the immediate-check-on-launch fix and the
+  manual "check now" button are not yet re-tested after that fix. Also
+  still open: whether this particular JB build/OEM skin kills backgrounded
+  processes aggressively between the (up to) 5-minute periodic checks
+  (some OEM skins do, pre-dating today's more standardized battery-
+  optimization exemptions) - only matters for orders that arrive between
+  checks while the app hasn't been opened in a while, worth watching for
+  over a longer unattended stretch, not just a quick reboot test.
 
 ## TLS on real hardware (confirmed, not just theoretical)
 

@@ -20,4 +20,6 @@
     <string name="test_print">Test Stampa</string>
     <string name="test_print_success">Test di stampa inviato con successo.</string>
     <string name="test_print_failure">Test di stampa fallito: %1$s</string>
+    <string name="check_orders_now">Controlla nuovi ordini ora</string>
+    <string name="check_orders_now_started">Controllo avviato: riceverai una notifica se ci sono nuovi ordini.</string>
 </resources>

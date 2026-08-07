@@ -77,7 +77,15 @@
             style="@style/AppButton.Outline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:text="@string/test_print" />
+
+        <Button
+            android:id="@+id/btnCheckOrdersNow"
+            style="@style/AppButton.Outline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/check_orders_now" />
 
     </LinearLayout>
 </ScrollView>
