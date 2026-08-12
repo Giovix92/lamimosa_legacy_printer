@@ -17,6 +17,9 @@ object EpsonFiscalXmlBuilder {
 
     private const val DEFAULT_MAX_LINE_CHARS = 32
 
+    // Ordine dello scontrino (tenuto identico a lamimosa_android's
+    // EpsonFiscalXmlBuilder.buildFromJob()): data in cima, poi i dettagli del prodotto (torta o
+    // vassoio), poi in fondo i dati di ritiro/consegna e cliente, e per ultimo l'operatore.
     fun buildFromOrder(order: Order, operator: String = "1", maxLineChars: Int = DEFAULT_MAX_LINE_CHARS): String {
         val sb = StringBuilder()
         sb.append("<printerNonFiscal>")
@@ -27,24 +30,26 @@ object EpsonFiscalXmlBuilder {
         sb.append(printLine("  ORDINE: ${order.id} ", operator, maxLineChars))
         sb.append(printLine("====================", operator, maxLineChars))
 
-        sb.append(printLine("CLIENTE: ${order.name}", operator, maxLineChars))
-        if (order.phone.isNotEmpty()) sb.append(printLine("TEL: ${order.phone}", operator, maxLineChars))
-        sb.append(printLine("CONSEGNA: ${order.orario}", operator, maxLineChars))
-        if (order.eventDate.isNotEmpty()) sb.append(printLine("DATA EVENTO: ${order.eventDate}", operator, maxLineChars))
-        if (order.sede.isNotEmpty()) sb.append(printLine("SEDE: ${order.sede.uppercase(Locale.getDefault())}", operator, maxLineChars))
-        if (order.operatore.isNotEmpty()) sb.append(printLine("OPERATORE: ${order.operatore}", operator, maxLineChars))
+        sb.append(printLine("DATA EVENTO: ${formatEventDate(order.eventDate)}", operator, maxLineChars))
         sb.append(printLine("--------------------", operator, maxLineChars))
 
         val isVassoio = order.categoria == "vassoio"
 
         if (isVassoio) {
             sb.append(printLine("--- DETTAGLI VASSOIO ---", operator, maxLineChars))
+            sb.append(printLine("TIPO: Vassoio", operator, maxLineChars))
             if (order.peso.isNotEmpty()) sb.append(printLine("PESO: ${order.peso}kg", operator, maxLineChars))
             if (order.tipoPaste.isNotEmpty()) sb.append(printLine("TIPO PASTE: ${order.tipoPaste}", operator, maxLineChars))
             sb.append(printLine("--------------------", operator, maxLineChars))
         } else {
             sb.append(printLine("--- DETTAGLI TORTA ---", operator, maxLineChars))
             if (order.tipologiaTorta.isNotEmpty()) sb.append(printLine("TIPO: ${order.tipologiaTorta}", operator, maxLineChars))
+            if (order.peso.isNotEmpty()) sb.append(printLine("PESO: ${order.peso}kg", operator, maxLineChars))
+
+            if (order.gusti.isNotEmpty()) sb.append(printLine("GUSTI: ${order.gusti.joinToString(", ")}", operator, maxLineChars))
+            if (order.gustoTortaAltro.isNotEmpty()) sb.append(printWrapped("ALTRO GUSTO:", order.gustoTortaAltro, operator, maxLineChars))
+            if (order.topping.isNotEmpty()) sb.append(printLine("AGGIUNTE: ${order.topping}", operator, maxLineChars))
+            if (order.panna.isNotEmpty()) sb.append(printLine("PANNA: ${order.panna}", operator, maxLineChars))
 
             if (order.occasione.isNotEmpty()) sb.append(printLine("OCCASIONE: ${order.occasione}", operator, maxLineChars))
             if (order.occasioneAltro.isNotEmpty()) sb.append(printWrapped(" ALTRA OCC.:", order.occasioneAltro, operator, maxLineChars))
@@ -52,12 +57,6 @@ object EpsonFiscalXmlBuilder {
             if (order.eta.isNotEmpty() || order.sesso.isNotEmpty()) {
                 sb.append(printLine("ETA/SESSO: ${order.eta.ifEmpty { "-" }} / ${order.sesso.ifEmpty { "-" }}", operator, maxLineChars))
             }
-
-            if (order.gusti.isNotEmpty()) sb.append(printLine("GUSTI: ${order.gusti.joinToString(", ")}", operator, maxLineChars))
-            if (order.gustoTortaAltro.isNotEmpty()) sb.append(printWrapped("ALTRO GUSTO:", order.gustoTortaAltro, operator, maxLineChars))
-            if (order.topping.isNotEmpty()) sb.append(printLine("TOPPING: ${order.topping}", operator, maxLineChars))
-
-            sb.append(printLine("--------------------", operator, maxLineChars))
 
             if (order.candeline == "Sì") {
                 sb.append(printLine("CANDELINE: SI (${order.numeroCandeline.ifEmpty { "0" }})", operator, maxLineChars))
@@ -68,7 +67,7 @@ object EpsonFiscalXmlBuilder {
                 if (order.testoScritta.isNotEmpty()) sb.append(printWrapped(" TESTO:", order.testoScritta, operator, maxLineChars))
             }
 
-            if (order.stampa) sb.append(printLine("STAMPA FOTO: SI", operator, maxLineChars))
+            if (order.stampa) sb.append(printLine("CIALDA (STAMPA FOTO): SI", operator, maxLineChars))
             if (order.fotoEsempio) sb.append(printLine("FOTO ESEMPIO: SI", operator, maxLineChars))
 
             sb.append(printLine("--------------------", operator, maxLineChars))
@@ -79,6 +78,15 @@ object EpsonFiscalXmlBuilder {
             sb.append(printLine("--------------------", operator, maxLineChars))
         }
 
+        if (order.sede.isNotEmpty()) sb.append(printLine("RITIRO: ${order.sede.uppercase(Locale.getDefault())}", operator, maxLineChars))
+        sb.append(printLine("ORARIO: ${order.orario}", operator, maxLineChars))
+        sb.append(printLine("NOME: ${order.name}", operator, maxLineChars))
+        if (order.phone.isNotEmpty()) sb.append(printLine("TEL: ${order.phone}", operator, maxLineChars))
+        if (order.email.isNotEmpty()) sb.append(printLine("EMAIL: ${order.email}", operator, maxLineChars))
+        sb.append(printLine("--------------------", operator, maxLineChars))
+
+        if (order.operatore.isNotEmpty()) sb.append(printLine("OPERATORE: ${order.operatore}", operator, maxLineChars))
+
         val footerDate = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
         sb.append(printLine(footerDate, operator, maxLineChars))
 
@@ -86,6 +94,13 @@ object EpsonFiscalXmlBuilder {
         sb.append("</printerNonFiscal>")
 
         return wrapInSoap(sb.toString())
+    }
+
+    private fun formatEventDate(eventDate: String): String {
+        if (eventDate.isEmpty()) return "-"
+        val parts = eventDate.split("-")
+        if (parts.size != 3) return eventDate
+        return "${parts[2]}/${parts[1]}/${parts[0]}"
     }
 
     fun buildTestPage(operator: String = "1", deviceName: String, appVersion: String): String {
