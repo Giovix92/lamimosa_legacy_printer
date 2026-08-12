@@ -48,6 +48,9 @@
                 <EditText android:id="@+id/edTipologiaAltro" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Quale tipo di torta?" />
             </LinearLayout>
 
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Peso (kg)" android:textStyle="bold" android:layout_marginTop="12dp" />
+            <EditText android:id="@+id/edPesoTorta" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="numberDecimal" />
+
             <LinearLayout android:id="@+id/groupGusti" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Gusti (max 2)" android:textStyle="bold" android:layout_marginTop="12dp" />
                 <TextView android:id="@+id/txtGustiSelected" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Nessun gusto selezionato" />

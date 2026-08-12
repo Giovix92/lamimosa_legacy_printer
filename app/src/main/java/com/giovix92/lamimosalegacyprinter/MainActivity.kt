@@ -98,7 +98,7 @@ class MainActivity : Activity() {
             val product = if (order.categoria == "vassoio") {
                 "Vassoio${if (order.peso.isNotEmpty()) " ${order.peso}kg" else ""}"
             } else {
-                order.tipologiaTorta.ifEmpty { "Torta" }
+                order.tipologiaTorta.ifEmpty { "Torta" } + (if (order.peso.isNotEmpty()) " ${order.peso}kg" else "")
             }
             view.findViewById<TextView>(R.id.txtSubtitle).text = "${OrderStatus.label(order.status)} · $product"
             // .mutate() is required: drawables inflated from the same XML resource

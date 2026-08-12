@@ -57,6 +57,7 @@ class OrderEditActivity : Activity() {
     private lateinit var spTipologia: Spinner
     private lateinit var groupTipologiaAltro: View
     private lateinit var edTipologiaAltro: EditText
+    private lateinit var edPesoTorta: EditText
     private lateinit var groupGusti: View
     private lateinit var txtGustiSelected: TextView
     private lateinit var groupGustoAltro: View
@@ -116,6 +117,7 @@ class OrderEditActivity : Activity() {
         spTipologia = findViewById(R.id.spTipologia)
         groupTipologiaAltro = findViewById(R.id.groupTipologiaAltro)
         edTipologiaAltro = findViewById(R.id.edTipologiaAltro)
+        edPesoTorta = findViewById(R.id.edPesoTorta)
         groupGusti = findViewById(R.id.groupGusti)
         txtGustiSelected = findViewById(R.id.txtGustiSelected)
         groupGustoAltro = findViewById(R.id.groupGustoAltro)
@@ -149,6 +151,7 @@ class OrderEditActivity : Activity() {
         edGustoAltro.setText(orderJson.optString("gustoTortaAltro"))
         edTestoScritta.setText(orderJson.optString("testoScritta"))
         edPeso.setText(orderJson.optString("peso"))
+        edPesoTorta.setText(orderJson.optString("peso"))
         // New order: default to today, like admin.js's "Nuovo Ordine" (avoids an
         // empty-looking summary and matches what /ordina prefills too).
         val defaultDate = if (orderId.isEmpty()) java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US).format(java.util.Date()) else ""
@@ -335,7 +338,7 @@ class OrderEditActivity : Activity() {
             fields.put("stampa", false)
             fields.put("fotoEsempio", false)
         } else {
-            fields.put("peso", "")
+            fields.put("peso", edPesoTorta.text.toString().trim())
             fields.put("tipoPaste", "")
             fields.put("occasione", selectedId(spOccasione) ?: "")
             fields.put("occasioneAltro", edOccasioneAltro.text.toString().trim())

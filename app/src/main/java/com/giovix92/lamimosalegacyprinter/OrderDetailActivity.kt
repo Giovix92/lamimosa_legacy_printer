@@ -91,6 +91,7 @@ class OrderDetailActivity : Activity() {
             row("Età festeggiato", order.eta)
             row("Candeline", if (order.candeline == "Sì") "Sì (${order.numeroCandeline})" else order.candeline)
             row("Tipo Torta", if (order.tipologiaTorta == "altro") order.tipologiaTortaAltro else order.tipologiaTorta)
+            row("Peso", if (order.peso.isNotEmpty()) "${order.peso}kg" else null)
             if (order.gusti.isNotEmpty()) row("Gusti", order.gusti.joinToString(", "))
             row("Altro gusto", order.gustoTortaAltro)
             row("Aggiunta", order.topping)
